@@ -1,5 +1,7 @@
 import math
 
+FEE_DEN = 1_000_000
+
 # a pool holds reserves x and y
 # x is the reserve of the token you're putting in
 # y is the reserve of the token you're taking out
@@ -32,7 +34,7 @@ def get_amount_in(x, y, dy, f):
 
     return dx    
 
-def get_amount_out_int(x, y, dx, fee_num=25, fee_den=10_000):
+def get_amount_out_int(x, y, dx, fee_num=25, fee_den=FEE_DEN):
     dx_eff = dx * (fee_den - fee_num) // fee_den
     
     k = x * y
@@ -42,7 +44,7 @@ def get_amount_out_int(x, y, dx, fee_num=25, fee_den=10_000):
     return y * dx_eff // (x + dx_eff)
     
 
-def get_amount_in_int(x, y, dy, fee_num=25, fee_den=10_000):
+def get_amount_in_int(x, y, dy, fee_num=25, fee_den=FEE_DEN):
     if dy >= y:
         raise ValueError("can't take out the whole reserve or more")
     
